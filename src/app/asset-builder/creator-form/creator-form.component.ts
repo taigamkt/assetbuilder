@@ -18,6 +18,7 @@ export class CreatorFormComponent implements OnInit {
 
   FungibleAssetStore: any;
   FungibleAssetStoreFactory: any;
+  needStore: boolean = false;
 
   accounts: string[];
 
