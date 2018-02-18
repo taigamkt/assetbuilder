@@ -56,7 +56,7 @@ contract FungibleAssetStore is ERC721Token, Ownable {
     url = _url;
   }
 
-  function createAssetType(string _title, string _description, string _imageUrl, string _assetType, uint _supply, string _properties) public{
+  function createAssetType(string _title, string _description, string _imageUrl, string _assetType, uint _supply, string _properties) public onlyOwner{
     FungibleAssetType memory asset = FungibleAssetType({
         title: _title,
         description: _description,

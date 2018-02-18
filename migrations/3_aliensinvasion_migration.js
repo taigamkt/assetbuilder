@@ -28,14 +28,14 @@ module.exports = async function(deployer, network, accounts) {
 
   //console.log(store);
   results = await Promise.all([
-    store.createAssetType("MFalcon 2178", "Star Wars Falcon for Alien invasion.", "images/assets/mfalcon.png", "gamming", 100, propertiesSpaceship1.toString(), {from: owner}),
-    store.createAssetType("MFalcon 21718", "Star Trek Enterprise for Alien Invasion. Boldy go where no alien has gone before.", "images/assets/enterprise.png", "gamming", 100, propertiesSpaceship2.toString(), {from: owner}),
-    store.createAssetType("TFighter", "Star Wars Fighter. Destroying rebel scum everywhere.", "images/assets/tfighter.png", "gamming", 100, propertiesSpaceship3.toString(), {from: owner}),
+    store.createAssetType("MFalcon 2178", "Star Wars Falcon for Alien invasion.", "images/assets/mfalcon.png", "gamming", 10, propertiesSpaceship1.toString(), {from: owner}),
+    store.createAssetType("MFalcon 21718", "Star Trek Enterprise for Alien Invasion. Boldy go where no alien has gone before.", "images/assets/enterprise.png", "gamming", 10, propertiesSpaceship2.toString(), {from: owner}),
+    store.createAssetType("TFighter", "Star Wars Fighter. Destroying rebel scum everywhere.", "images/assets/tfighter.png", "gamming", 10, propertiesSpaceship3.toString(), {from: owner}),
     store.transfer(firstPlayer, 0, {from: owner}),
-    store.transfer(firstPlayer, 100, {from: owner}),
-    store.transfer(firstPlayer, 200, {from: owner}),
+    store.transfer(firstPlayer, 10, {from: owner}),
+    store.transfer(firstPlayer, 20, {from: owner}),
     store.transfer(secondPlayer, 1, {from: owner}),
-    store.transfer(secondPlayer, 201, {from: owner})
+    store.transfer(secondPlayer, 21, {from: owner})
   ]);
 
 

@@ -26,6 +26,10 @@ contract("AssetType", async function(accounts) {
     return count;
   }
 
+  let isEVMException = function(err) {
+    return err.toString().includes('revert');
+  }
+
   describe('FungibleAssetStore - Creation', () => {
     let contract;
     /*beforeEach(async function() {
@@ -63,7 +67,7 @@ contract("AssetType", async function(accounts) {
       let assetType = "gamming";
       let supply = 10;
       let properties = JSON.stringify({prop1 : 123, prop2 : "121"});
-      console.log(properties);
+
       const contract = await FungibleAssetStore.new(storeName, storeUrl, {from: owner});
 
       let tx = await contract.createAssetType(title, description, imageUrl, assetType, supply, properties, {from: owner});
@@ -86,7 +90,6 @@ contract("AssetType", async function(accounts) {
       let assetTypeA = asset[3];
       let supplyA = asset[4].toString();
       let propertiesA = asset[5];
-      console.log(propertiesA);
 
       assert.equal(titleA, title, "Title not correct");
       assert.equal(descriptionA, description, "Description not correct");
@@ -182,6 +185,27 @@ contract("AssetType", async function(accounts) {
       assert.equal(asset1[1], title1, "Title second asset not correct");
       assert.equal(asset2[1], title2, "Title third asset not correct");
 
+    });
+
+    it("should fail when creating the asset when not the owner", async function() {
+      let storeName = "MyStore";
+      let storeUrl = "http://my.store";
+
+      let title = "MyAssetType";
+      let description = "Asset Description";
+      let imageUrl = "http://my.store/asset.png";
+      let assetType = "gamming";
+      let supply = 10;
+      let properties = JSON.stringify({prop1 : 123, prop2 : "121"});
+
+      const contract = await FungibleAssetStore.new(storeName, storeUrl, {from: owner});
+      try {
+        await contract.createAssetType(title, description, imageUrl, assetType, supply, properties, {from: firstPlayer});
+        assert(false);
+      }
+      catch (err) {
+        assert(isEVMException(err), err.toString());
+      }
     });
 
   });
