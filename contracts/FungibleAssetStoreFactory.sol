@@ -5,14 +5,11 @@ import './FungibleAssetStore.sol';
 
 contract FungibleAssetStoreFactory {
 
-
-
-
-  address[] private stores;
+  mapping (address => address[]) private storesByOwners ;
 
   event Debug(string _str);
 
-  event StoreCreated(string name, string url, address addr);
+  event StoreCreated(string name, string url, address owner, address addr);
 
   function FungibleAssetStoreFactory() public {
 
@@ -22,16 +19,16 @@ contract FungibleAssetStoreFactory {
     FungibleAssetStore store = new FungibleAssetStore(_name, _url);
     store.transferOwnership(msg.sender);
     address storeAddress = address(store);
-    stores.push(storeAddress);
-    StoreCreated(_name, _url, address(storeAddress));
+    storesByOwners[msg.sender].push(storeAddress);
+    StoreCreated(_name, _url, msg.sender, address(storeAddress));
   }
 
   function getNumberStores() public view returns (uint) {
-    return stores.length;
+    return storesByOwners[msg.sender].length;
   }
 
   function getStoreAddress(uint _index) public returns (address) {
-    require(_index < stores.length);
-    return stores[_index];
+    require(_index < storesByOwners[msg.sender].length);
+    return storesByOwners[msg.sender][_index];
   }
 }
