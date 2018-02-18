@@ -3,7 +3,7 @@
     <form class="container">
         <h3>Store</h3>
         <label for="store-name">Create a new store for your new asset or choose an existing one.</label>
-  
+
         <div class="form-group">
           <select class="form-control" id="store-name" name="store-name">
             <option>Alien Games</option>
@@ -13,22 +13,22 @@
           <!-- HiddenForm -->
           <div class="add-store-form hide form-group">
             <label for="store-name">Store Name</label>
-            <input class="form-control" type="text" id="store-name" name="store-name" >
+            <input class="form-control" type="text" id="store-name" name="store-name" (change)="setStoreName($event)">
             <br>
-            <button class="btn btn-primary">Save</button>
+            <button class="btn btn-primary" (click)="createStore()">Save</button>
           </div>
         </div>
-        
+
         <hr/>
-  
+
         <p>Define the characteristics of your asset</p>
-  
+
         <!-- Title -->
         <div class="input-wrapper form-group">
           <label for="asset-title">Title</label>
           <input class="form-control" type="text" id="asset-title" name="asset-title" placeholder="My Crypto Asset" (change)="setName($event)">
         </div>
-  
+
         <!-- Image URL -->
         <div class="input-wrapper form-group">
           <label for="asset-image">Enter the URL to your asset image.</label>
@@ -37,7 +37,7 @@
           <small>(No larger than 286 x 386 pixels.)</small>
           <img src="/img/upload.png" />
         </div>
-  
+
         <!-- Supply and Price -->
         <div class="input-wrapper form-group">
           <div class="sub-input-wrapper">
@@ -45,14 +45,14 @@
             <input class="form-control" type="text" id="asset-supply" name="asset-supply" placeholder="10000" (change)="setTotalSupply($event)">
           </div>
         </div>
-  
+
         <!-- Description -->
         <div class="input-wrapper form-group">
           <label for="asset-description">Description <span>(Maximum of 200 characters)</span></label>
           <input class="form-control" type="text" id="asset-description" name="asset-supply">
         </div>
-  
-  
+
+
         <!-- Asset Type -->
         <div class="input-wrapper form-group">
           <label for="asset-description">Asset Type</label>
@@ -65,9 +65,8 @@
             <option>Other</option>
           </select>
         </div>
-  
+
         <button type="submit" class="btn btn-primary" (click)="createSimpleAssetType()">Create New Asset</button>
     </form>
-  
+
   </section>
-  
