@@ -31,12 +31,12 @@
               </select>
             </div>
             <div class="col-md-5">
-              <button class="btn btn-primary">Create New Store</button>
+              <button class="btn btn-primary" (click)="needStore = !needStore">Create New Store</button>
             </div>
           </div>
 
           <!-- HiddenForm -->
-          <div class="add-store-form hide form-group" *ngIf="needStore">
+          <div class="add-store-form form-group" *ngIf="needStore">
             <label for="store-name">Store Name</label>
             <input class="form-control" type="text" id="store-name" name="store-name" >
             <br>
