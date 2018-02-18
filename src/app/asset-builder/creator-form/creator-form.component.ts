@@ -34,6 +34,10 @@ export class CreatorFormComponent implements OnInit {
     account: ''
   };
 
+  storeModel = {
+    name: ''
+  };
+
   status = '';
 
   constructor(private web3Service: Web3Service) {
@@ -150,6 +154,9 @@ export class CreatorFormComponent implements OnInit {
     this.model.description = e.target.value;
   }
 
+  async createStore() {
+    
+  }
 
   async createSimpleAssetType() {
     console.log("On createSimpleAssetType!");
