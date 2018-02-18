@@ -31,4 +31,8 @@ contract FungibleAssetStoreFactory {
     require(_index < storesByOwners[msg.sender].length);
     return storesByOwners[msg.sender][_index];
   }
+
+  function getStores() public returns(address[]) {
+    return storesByOwners[msg.sender];
+  }
 }

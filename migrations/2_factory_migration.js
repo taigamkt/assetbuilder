@@ -2,7 +2,6 @@ var Migrations = artifacts.require("./Migrations.sol");
 
 var FungibleAssetStoreFactory = artifacts.require("./FungibleAssetStoreFactory.sol");
 
-
 module.exports = async function(deployer, network, accounts) {
   //console.log(accounts);
   let factoryOwner = accounts[9];
