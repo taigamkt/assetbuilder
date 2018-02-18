@@ -32,6 +32,10 @@ export class CreatorFormComponent implements OnInit {
     account: ''
   };
 
+  storeModel = {
+    name: ''
+  };
+
   status = '';
 
   constructor(private web3Service: Web3Service) {
@@ -148,6 +152,7 @@ export class CreatorFormComponent implements OnInit {
     console.log('Setting description: ' + e.target.value);
     this.model.description = e.target.value;
   }
+
 
   setStoreName(e) {
     console.log('Setting storeName: ' + e.target.value);
