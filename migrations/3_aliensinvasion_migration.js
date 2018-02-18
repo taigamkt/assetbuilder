@@ -43,6 +43,8 @@ module.exports = async function(deployer, network, accounts) {
   const ownerContract = await store.owner.call();
   console.log('AlienInvasion Smart Contract Address: '+addr);
   console.log('AlienInvasion Smart Contract Owner: '+ownerContract);
+  console.log('Player 1: '+firstPlayer);
+  console.log('Player 2: '+secondPlayer);
 
 
   /*results = await Promise.all([

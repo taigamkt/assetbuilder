@@ -3,6 +3,7 @@ import { Web3Service } from '../../util/web3.service';
 
 import FungibleAssetStore_artifacts from '../../../../build/contracts/FungibleAssetStore.json';
 import FungibleAssetStoreFactory_artifacts from '../../../../build/contracts/FungibleAssetStoreFactory.json';
+import Factory_artifacts from '../../../../build/contracts/Factory.json';
 
 // TODO: Move to an util library
 // let toAscii = function(str) {
@@ -18,18 +19,31 @@ export class CreatorFormComponent implements OnInit {
 
   FungibleAssetStore: any;
   FungibleAssetStoreFactory: any;
+  Factory: any;
   needStore: boolean = false;
+
+  stores: any;
+  selectedStore: any;
 
   accounts: string[];
 
   model = {
     storeName: '',
     storeUrl: '',
+    selectedStore: '',
     //---------
-    name: '',
-    totalSupply: 0,
+    assetType: '',
+    title: '',
     description: '',
-    account: ''
+    imageUrl: '',
+    supply: 0,
+    price: 0,
+    properties: '',
+    account: '',
+    //-----
+    transferSmartContract: '',
+    transferTokenId: '',
+    transferTo:''
   };
 
   storeModel = {
@@ -39,12 +53,11 @@ export class CreatorFormComponent implements OnInit {
   status = '';
 
   constructor(private web3Service: Web3Service) {
-    console.log('Constructor: ' + web3Service);
   }
 
   ngOnInit() {
-    console.log('OnInit: ' + this.web3Service);
-
+    this.stores = [];
+    this.selectedStore = '';
     // subscribe to watch account change in metamask
     this.watchAccount();
 
@@ -52,7 +65,15 @@ export class CreatorFormComponent implements OnInit {
     this.web3Service.artifactsToContract(FungibleAssetStoreFactory_artifacts)
       .then(async (contractAbstraction) => {
         this.FungibleAssetStoreFactory = contractAbstraction;
-        const deployedFactory = await this.FungibleAssetStoreFactory.deployed();
+        this.watchAccount();
+    });
+    this.web3Service.artifactsToContract(FungibleAssetStore_artifacts)
+      .then(async (contractAbstraction) => {
+        this.FungibleAssetStore = contractAbstraction;
+    });
+    this.web3Service.artifactsToContract(Factory_artifacts)
+      .then(async (contractAbstraction) => {
+        this.Factory = contractAbstraction;
     });
     // );
     // this.web3Service.artifactsToContract(simpleAssetTypeFactory_artifacts)
@@ -82,75 +103,87 @@ export class CreatorFormComponent implements OnInit {
     this.web3Service.accountsObservable.subscribe((accounts) => {
       this.accounts = accounts;
       this.model.account = accounts[0];
+      console.log("Account: "+this.model.account);
       //this.refreshBalance();
+      this.loadStores();
     });
   }
 
-  async refreshBalance() {
-    //List assets created buy the selected Address
-    //try {
-    /*  const deployedRegistry = await this.AssetTypesRegistry.deployed();
+  /*async loadStores2() {
+    const factory = await this.FungibleAssetStoreFactory.deployed();
+    let stores = await factory.getStores.call({from: this.model.account});
+    console.log(stores);
+  }*/
+  async loadFactory() {
 
-      const assetsFromOwner = await deployedRegistry.getAssetsFromOwner.call(this.model.account);
-      console.log(assetsFromOwner);
-      for(let i = 0; i < assetsFromOwner.length; i++) {
-        let assetContractAddress = assetsFromOwner[i];
-        //console.log(assetContractAddress);
+  }
+  async loadStores() {
+    let factory = await this.FungibleAssetStoreFactory.deployed();
+    let numStores = await factory.getNumberStores.call({from: this.model.account});
+    this.stores = [];
+    //let tmp = await factory.getStores.call({from: this.model.account});
+    //console.log(tmp);
 
-        let assetType = await this.AssetType.at(assetContractAddress);
-        // let assetTypeStr = toAscii(await assetType.assetType.call());
-        // console.log(assetContractAddress+" - "+assetTypeStr);
-      }
-
-      /*
-      const transaction = await deployedSimpleAssetTypeFactory.createSimpleAssetType(this.model.name,this.model.totalSupply,this.model.description,
-        {gas: 900000, from:this.model.account});
-        console.log(transaction);
-        for(let i = 0; i < transaction.logs.length; i++) {
-          let value = transaction.logs[i];
-          if(value.event == "SimpleAssetTypeCreated") {
-            console.log("SimpleAssetTypeCreated event detected");
-            this.status = "New contract created: "+value.args._contractAddress);
-            console.log(value.args._contractAddress);
-          }
-        });
-      /*if (!transaction) {
-        this.setStatus('Transaction failed!');
-      } else {
-        this.setStatus('Transaction complete!');
-      }*/
-  /*  } catch (e) {
-      console.log(e);
-      this.setStatus('Error sending coin; see log.');
+    for(var i = 0; i < numStores; i++) {
+      let storeAddr = await factory.getStoreAddress.call(i, {from: this.model.account});
+      let store = await this.FungibleAssetStore.at(storeAddr);
+      let storeName = await store.name.call({from: this.model.account});
+  /*    console.log("store addr:"+storeAddr+" - "+i);
+      console.log("store name:"+storeName+" - "+i);
+*/
+      this.stores.push({name: storeName, value: storeAddr});
     }
+    //console.log(this.stores);
+  }
 
+  async refreshBalance() {
 
-    /*try {
-      const deployedMetaCoin = await this.MetaCoin.deployed();
-      const metaCoinBalance = await deployedMetaCoin.getBalance.call(this.model.account);
-      console.log('Found balance: ' + metaCoinBalance);
-      this.model.balance = metaCoinBalance;
-    } catch (e) {
-      console.log(e);
-      this.setStatus('Error getting balance; see log.');
-    }*/
+  }
+
+  getEvent(logs, eventName) {
+    let size = logs.length;
+    for(let i = 0; i < size; i++) {
+      if(logs[i].event == eventName){
+        return logs[i];
+      }
+    }
   }
 
   setStatus(status) {
     this.status = status;
   }
-
-  setName(e) {
-    console.log('Setting name: ' + e.target.value);
-    this.model.name = e.target.value;
+  setStore(e) {
+    console.log('Setting selectedStore: ' + e.target.value);
+    this.model.selectedStore = e.target.value;
   }
-  setTotalSupply(e) {
-    console.log('Setting totalSupply: ' + e.target.value);
-    this.model.totalSupply = e.target.value;
+
+  setAssetType(e) {
+    console.log('Setting assetType: ' + e.target.value);
+    this.model.assetType = e.target.value;
+  }
+  setTitle(e) {
+    console.log('Setting title: ' + e.target.value);
+    this.model.title = e.target.value;
   }
   setDescription(e) {
     console.log('Setting description: ' + e.target.value);
     this.model.description = e.target.value;
+  }
+  setImageUrl(e) {
+    console.log('Setting imageUrl: ' + e.target.value);
+    this.model.imageUrl = e.target.value;
+  }
+  setSupply(e) {
+    console.log('Setting supply: ' + e.target.value);
+    this.model.supply = e.target.value;
+  }
+  setPrice(e) {
+    console.log('Setting price: ' + e.target.value);
+    this.model.price = e.target.value;
+  }
+  setProperties(e) {
+    console.log('Setting properties: ' + e.target.value);
+    this.model.properties = e.target.value;
   }
 
 
@@ -162,95 +195,90 @@ export class CreatorFormComponent implements OnInit {
     console.log('Setting storeUrl: ' + e.target.value);
     this.model.storeUrl = e.target.value;
   }
+
+  setTransferSmartContract(e) {
+    console.log('Setting transferSmartContract: ' + e.target.value);
+    this.model.transferSmartContract = e.target.value;
+  }
+  setTransferTokenId(e) {
+    console.log('Setting transferTokenId: ' + e.target.value);
+    this.model.transferTokenId = e.target.value;
+  }
+  setTransferTo(e) {
+    console.log('Setting transferTo: ' + e.target.value);
+    this.model.transferTo = e.target.value;
+  }
+
+
   async createStore(){
     try {
-      const factory = await this.FungibleAssetStoreFactory.deployed();
+      let factory = await this.FungibleAssetStoreFactory.deployed();
 
-      let tx = await factory.createStore(this.model.storeName, this.model.storeUrl, {gas: 900000, from:this.model.account});
+      let tx = await factory.createStore(this.model.storeName, this.model.storeUrl, {gas: 9000000, from:this.model.account});
+      let storeCreatedEvent = this.getEvent(tx.logs, "StoreCreated");
+      let storeAddress = storeCreatedEvent.args.addr;
+      let storeName = storeCreatedEvent.args.name;
+      this.model.selectedStore = storeAddress;
+      let storeOption = {name: storeName, value: storeAddress};
+      //this.stores.push(storeOption);
+      //this.selectedStore = storeOption;
+      this.loadStores();
       console.log(tx);
+      console.log("new store address:"+storeAddress);
 
-      /*const transaction = await deployedSimpleAssetTypeFactory.createSimpleAssetType(this.model.name,this.model.totalSupply,this.model.description,
-        {gas: 900000, from:this.model.account});
-        console.log(transaction);
-        for(let i = 0; i < transaction.logs.length; i++) {
-          let value = transaction.logs[i];
-          if(value.event == "SimpleAssetTypeCreated") {
-            console.log("SimpleAssetTypeCreated event detected");
-            this.status = "New contract created: "+value.args._contractAddress;
-            console.log(value.args._contractAddress);
-            this.refreshBalance();
-          }
-        };*/
-      /*if (!transaction) {
-        this.setStatus('Transaction failed!');
-      } else {
-        this.setStatus('Transaction complete!');
-      }*/
     } catch (e) {
       console.log(e);
       this.setStatus('Error sending coin; see log.');
     }
   }
 
-  async createSimpleAssetType() {
-    /*console.log("On createSimpleAssetType!");
-
-    console.log("Asset Name: "+this.model.name);
-    console.log("Total Supply: "+this.model.totalSupply);
-    console.log("Description: "+this.model.description);
-
-    this.setStatus('Registering contract... (please wait)');
-
+  async createAsset(){
     try {
+      console.log(this.model.selectedStore);
+      let store = await this.FungibleAssetStore.at(this.model.selectedStore);
 
-      const deployedSimpleAssetTypeFactory = await this.SimpleAssetTypeFactory.deployed();
 
-      //TODO: handle the creation of new asset
-      const transaction = await deployedSimpleAssetTypeFactory.createSimpleAssetType(this.model.name,this.model.totalSupply,this.model.description,
-        {gas: 900000, from:this.model.account});
-        console.log(transaction);
-        for(let i = 0; i < transaction.logs.length; i++) {
-          let value = transaction.logs[i];
-          if(value.event == "SimpleAssetTypeCreated") {
-            console.log("SimpleAssetTypeCreated event detected");
-            this.status = "New contract created: "+value.args._contractAddress;
-            console.log(value.args._contractAddress);
-            this.refreshBalance();
-          }
-        };
-      /*if (!transaction) {
-        this.setStatus('Transaction failed!');
-      } else {
-        this.setStatus('Transaction complete!');
-      }*/
-  /*  } catch (e) {
+      let tx = await store.createAssetType(this.model.title, this.model.description, this.model.imageUrl, this.model.assetType, this.model.supply, this.model.properties, {gas: 9000000, from:this.model.account});
+      let assetEvent = this.getEvent(tx.logs, "AssetTypeCreated");
+      let fromTokenId = assetEvent.args.fromTokenId.toNumber();
+      let toTokenId = assetEvent.args.toTokenId.toNumber();
+
+      console.log(tx);
+      console.log("fromTokenId: "+fromTokenId);
+      console.log("toTokenId: "+toTokenId);
+  //    console.log(storeCreatedEvent);
+    //  console.log("new store address:"+storeAddress);
+
+    } catch (e) {
       console.log(e);
       this.setStatus('Error sending coin; see log.');
     }
-/*
-    debugger;
-    this.AssetFactory.registerSimpleAssetType(this.model.name,this.model.totalSupply,this.model.description, {gas: 90000*2},
-      (err, res) => {
-        console.log(res);
-        console.log(res.transactionHash);
-        debugger;
-        /*web3.eth.getTransactionReceipt(res.transactionHash, (err2, res2) => {
-            if (err) {
-                console.log(err2);
-                return;
-            }
-            console.log(res2);
-            let address = res2.contractAddress;
-            if (address) {
-                console.log('Contract address: ' + address);
-                // Let's test the deployed contract
-                //testContract(address);
-                let deployedContract = contract.at(address);
-                debugger;
-                //deployedContract.g.call((err3, res3) => {console.log(res3)});
-            }
-          });*/
-    //});
   }
+
+
+  async transferToken(){
+    try {
+      let store = await this.FungibleAssetStore.at(this.model.transferSmartContract);
+
+
+      let tx = await store.transfer(this.model.transferTo, this.model.transferTokenId, {gas: 9000000, from:this.model.account});
+      /*let storeCreatedEvent = this.getEvent(tx.logs, "StoreCreated");
+      let storeAddress = storeCreatedEvent.args.addr;
+      let storeName = storeCreatedEvent.args.name;
+
+      let storeOption = {name: storeName, value: storeAddress};*/
+      //this.stores.push(storeOption);
+      //this.selectedStore = storeOption;
+      //this.loadStores();
+      console.log(tx);
+      //console.log(storeCreatedEvent);
+      //texconsole.log("new store address:"+storeAddress);
+
+    } catch (e) {
+      console.log(e);
+      this.setStatus('Error sending coin; see log.');
+    }
+  }
+
 
 }

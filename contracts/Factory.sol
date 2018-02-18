@@ -3,17 +3,13 @@ pragma solidity ^0.4.18;
 //import 'zeppelin-solidity/contracts/ownership/Ownable.sol';
 import './FungibleAssetStore.sol';
 
-contract FungibleAssetStoreFactory {
+contract Factory {
 
   mapping (address => address[]) private storesByOwners ;
 
   event Debug(string _str);
 
   event StoreCreated(string name, string url, address owner, address addr);
-
-  function FungibleAssetStoreFactory() public {
-
-  }
 
   function createStore(string _name, string _url) public {
     FungibleAssetStore store = new FungibleAssetStore(_name, _url);
