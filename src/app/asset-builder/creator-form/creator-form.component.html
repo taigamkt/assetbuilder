@@ -38,7 +38,7 @@
           <!-- HiddenForm -->
           <div class="add-store-form form-group" *ngIf="needStore">
             <label for="store-name">Store Name</label>
-            <input class="form-control" type="text" id="store-name" name="store-name" >
+            <input class="form-control" type="text" id="store-name" name="store-name" (change)="setStoreName($event)">
             <br>
             <button class="btn btn-primary" (click)="createStore()">Save This Store</button>
           </div>
@@ -64,7 +64,6 @@
             <option>Other</option>
           </select>
         </div>
-
         <!-- Title -->
         <div class="input-wrapper form-group col-md-7">
           <label for="asset-title">Title</label>
@@ -76,7 +75,6 @@
           <label for="asset-description">Description <span>(Maximum of 200 characters)</span></label>
           <textarea class="form-control" id="asset-description" name="asset-supply"></textarea>
         </div>
-
         <!-- Image URL -->
         <div class="input-wrapper form-group col-md-7 image-bg">
           <label for="asset-image">Enter the URL to your asset image.</label>
@@ -105,7 +103,6 @@
             </div>
           </div>
         </div>
-
         <!-- Properties -->
         <div class="input-wrapper form-group col-md-7">
           <label for="asset-description">Properties</label>
@@ -121,3 +118,4 @@
 
   </section>
 </div>
+
