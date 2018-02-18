@@ -23,6 +23,7 @@ export class CreatorFormComponent implements OnInit {
   SimpleAssetTypeFactory: any;
   AssetType: any;
   SimpleAssetType: any;
+  needStore: boolean = false;
 
   accounts: string[];
 
