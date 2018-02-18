@@ -3,12 +3,6 @@ import { Web3Service } from '../../util/web3.service';
 
 import FungibleAssetStore_artifacts from '../../../../build/contracts/FungibleAssetStore.json';
 import FungibleAssetStoreFactory_artifacts from '../../../../build/contracts/FungibleAssetStoreFactory.json';
-import Factory_artifacts from '../../../../build/contracts/Factory.json';
-
-// TODO: Move to an util library
-// let toAscii = function(str) {
-//   return web3.toAscii(str).replace(/\u0000/g, '');
-// }
 
 @Component({
   selector: 'app-creator-form',
@@ -19,7 +13,6 @@ export class CreatorFormComponent implements OnInit {
 
   FungibleAssetStore: any;
   FungibleAssetStoreFactory: any;
-  Factory: any;
   needStore: boolean = false;
 
   stores: any;
@@ -71,32 +64,6 @@ export class CreatorFormComponent implements OnInit {
       .then(async (contractAbstraction) => {
         this.FungibleAssetStore = contractAbstraction;
     });
-    this.web3Service.artifactsToContract(Factory_artifacts)
-      .then(async (contractAbstraction) => {
-        this.Factory = contractAbstraction;
-    });
-    // );
-    // this.web3Service.artifactsToContract(simpleAssetTypeFactory_artifacts)
-    //   .then(async (contractAbstraction) => {
-    //     this.SimpleAssetTypeFactory = contractAbstraction;
-    //     const deployedSimpleAssetTypeFactory = await this.SimpleAssetTypeFactory.deployed();
-
-    //     let factoryRegistryAddress = await deployedSimpleAssetTypeFactory.assetTypesRegistry.call();
-    //     this.status = "Registry address: "+factoryRegistryAddress;
-
-    //   }
-    // );
-    // this.web3Service.artifactsToContract(assetType_artifacts)
-    //   .then((contractAbstraction) => {
-    //     this.AssetType = contractAbstraction;
-    //     this.refreshBalance();
-    //   }
-    // );
-    // this.web3Service.artifactsToContract(simplAssetType_artifacts)
-    //   .then((contractAbstraction) => {
-    //     this.SimpleAssetType = contractAbstraction;
-    //   }
-    // );
   }
 
   watchAccount() {
@@ -107,15 +74,6 @@ export class CreatorFormComponent implements OnInit {
       //this.refreshBalance();
       this.loadStores();
     });
-  }
-
-  /*async loadStores2() {
-    const factory = await this.FungibleAssetStoreFactory.deployed();
-    let stores = await factory.getStores.call({from: this.model.account});
-    console.log(stores);
-  }*/
-  async loadFactory() {
-
   }
   async loadStores() {
     let factory = await this.FungibleAssetStoreFactory.deployed();
@@ -262,17 +220,8 @@ export class CreatorFormComponent implements OnInit {
 
 
       let tx = await store.transfer(this.model.transferTo, this.model.transferTokenId, {gas: 9000000, from:this.model.account});
-      /*let storeCreatedEvent = this.getEvent(tx.logs, "StoreCreated");
-      let storeAddress = storeCreatedEvent.args.addr;
-      let storeName = storeCreatedEvent.args.name;
 
-      let storeOption = {name: storeName, value: storeAddress};*/
-      //this.stores.push(storeOption);
-      //this.selectedStore = storeOption;
-      //this.loadStores();
       console.log(tx);
-      //console.log(storeCreatedEvent);
-      //texconsole.log("new store address:"+storeAddress);
 
     } catch (e) {
       console.log(e);
