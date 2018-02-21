@@ -28,7 +28,7 @@ export class CreatorFormComponent implements OnInit {
     assetType: '',
     title: '',
     description: '',
-    imageUrl: '',
+    imageUrl: 'assets/upload.png',
     supply: 0,
     price: 0,
     properties: '',
@@ -172,7 +172,7 @@ export class CreatorFormComponent implements OnInit {
     try {
       let factory = await this.FungibleAssetStoreFactory.deployed();
 
-      let tx = await factory.createStore(this.model.storeName, this.model.storeUrl, {gas: 9000000, from:this.model.account});
+      let tx = await factory.createStore(this.model.storeName, this.model.storeUrl, {gas: 4468057, from:this.model.account});
       let storeCreatedEvent = this.getEvent(tx.logs, "StoreCreated");
       let storeAddress = storeCreatedEvent.args.addr;
       let storeName = storeCreatedEvent.args.name;
@@ -196,7 +196,7 @@ export class CreatorFormComponent implements OnInit {
       let store = await this.FungibleAssetStore.at(this.model.selectedStore);
 
 
-      let tx = await store.createAssetType(this.model.title, this.model.description, this.model.imageUrl, this.model.assetType, this.model.supply, this.model.properties, {gas: 9000000, from:this.model.account});
+      let tx = await store.createAssetType(this.model.title, this.model.description, this.model.imageUrl, this.model.assetType, this.model.supply, this.model.properties, {gas: 4468057, from:this.model.account});
       let assetEvent = this.getEvent(tx.logs, "AssetTypeCreated");
       let fromTokenId = assetEvent.args.fromTokenId.toNumber();
       let toTokenId = assetEvent.args.toTokenId.toNumber();
@@ -219,7 +219,7 @@ export class CreatorFormComponent implements OnInit {
       let store = await this.FungibleAssetStore.at(this.model.transferSmartContract);
 
 
-      let tx = await store.transfer(this.model.transferTo, this.model.transferTokenId, {gas: 9000000, from:this.model.account});
+      let tx = await store.transfer(this.model.transferTo, this.model.transferTokenId, {gas: 4468057, from:this.model.account});
 
       console.log(tx);
 

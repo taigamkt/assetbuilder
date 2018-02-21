@@ -4,8 +4,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { CreatorFormComponent } from './asset-builder/creator-form/creator-form.component';
 
 const routes: Routes = [
-  { path: 'create', component: CreatorFormComponent },
-  { path: '', redirectTo: '/create', pathMatch: 'full' }
+  { path: '', component: CreatorFormComponent }
+  //{ path: 'create', component: CreatorFormComponent },
+  //{ path: '', redirectTo: '/create', pathMatch: 'full' }
 ];
 
 @NgModule({

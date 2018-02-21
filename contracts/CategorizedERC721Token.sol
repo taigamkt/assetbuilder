@@ -16,7 +16,7 @@ contract CategorizedERC721Token is ERC721Token, Ownable {
 
   // method used to create a new category and mint the tokens
   function createCategory(uint _supply) public onlyOwner{
-    uint categoryId = categoriesSupply.push(_supply);
+    uint categoryId = categoriesSupply.push(_supply)-1;
 
     uint startTokenId = totalSupply();
     uint lastTokenId = startTokenId + _supply - 1;

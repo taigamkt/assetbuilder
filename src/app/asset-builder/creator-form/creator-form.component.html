@@ -90,7 +90,7 @@
           <input class="form-control" type="text" id="asset-image" name="asset-image"  (change)="setImageUrl($event)">
 
           <div class="upload-image-wrapper">
-            <img src="assets/upload.png" />
+            <img src="{{model.imageUrl}}" />
             <p>TAIGA does not store your assets. We recommend using ipfs.io for hosting your content.</p>
             <small>(No larger than 286 x 386 pixels.)</small>
           </div>

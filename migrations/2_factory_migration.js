@@ -4,7 +4,7 @@ var FungibleAssetStoreFactory = artifacts.require("./FungibleAssetStoreFactory.s
 
 module.exports = async function(deployer, network, accounts) {
   //console.log(accounts);
-  let factoryOwner = accounts[9];
+  let factoryOwner = accounts[0];
   await Promise.all([
     deployer.deploy(FungibleAssetStoreFactory, {from: factoryOwner})
   ]);
