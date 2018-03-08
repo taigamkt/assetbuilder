@@ -6,7 +6,7 @@ import FungibleAssetStoreFactory_artifacts from '../../../../build/contracts/Fun
 @Component({
   selector: 'app-creator-form',
   templateUrl: './creator-form.component.html',
-  styleUrls: ['./creator-form.component.css']
+  styleUrls: ['./creator-form.component.scss']
 })
 export class CreatorFormComponent implements OnInit {
   private FungibleAssetStore: any;

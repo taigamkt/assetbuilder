@@ -1,0 +1,12 @@
+/*
+ * Global application theme.
+ * Framework overrides and customization goes here.
+ */
+@import "./theme-variables";
+@import "../app/app.component";
+@import "../app/header/header.component";
+@import "../app/asset/asset.component";
+@import "../app/asset-builder/creator-form/creator-form.component";
+@import "../app/marketplace-listing/marketplace-listing.component";
+@import "../app/my-assets/my-assets.component";
+

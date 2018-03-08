@@ -7,12 +7,18 @@ import {CreatorFormComponent} from './asset-builder/creator-form/creator-form.co
 import {HeaderComponent} from './header/header.component';
 import {UtilModule} from './util/util.module';
 import {AppRoutingModule} from './app-routing.module';
+import { MarketplaceListingComponent } from './marketplace-listing/marketplace-listing.component';
+import { AssetComponent } from './asset/asset.component';
+import { MyAssetsComponent } from './my-assets/my-assets.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CreatorFormComponent,
-    HeaderComponent
+    HeaderComponent,
+    MarketplaceListingComponent,
+    AssetComponent,
+    MyAssetsComponent
   ],
   imports: [
     BrowserModule,
