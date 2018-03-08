@@ -1,7 +1,6 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { CreatorFormModule } from './creator-form/creator-form.module';
-
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {CreatorFormModule} from './creator-form/creator-form.module';
 
 @NgModule({
   imports: [
@@ -10,4 +9,5 @@ import { CreatorFormModule } from './creator-form/creator-form.module';
   ],
   declarations: []
 })
-export class AssetBuilderModule { }
+export class AssetBuilderModule {
+}

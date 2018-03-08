@@ -1,7 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { CreatorFormComponent } from './creator-form.component';
-
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
 @NgModule({
   imports: [
@@ -9,4 +7,5 @@ import { CreatorFormComponent } from './creator-form.component';
   ],
   declarations: []
 })
-export class CreatorFormModule { }
+export class CreatorFormModule {
+}

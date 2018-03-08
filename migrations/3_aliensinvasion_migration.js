@@ -2,7 +2,6 @@ var Migrations = artifacts.require("./Migrations.sol");
 
 var FungibleAssetStore = artifacts.require("./FungibleAssetStore.sol");
 
-
 module.exports = async function(deployer, network, accounts) {
   //console.log(accounts);
   let storeName = "Aliens Invasion";
@@ -18,7 +17,7 @@ module.exports = async function(deployer, network, accounts) {
 
   instances = await Promise.all([
     FungibleAssetStore.deployed()
-  ])
+  ]);
 
   let store = instances[0];
 
@@ -38,7 +37,6 @@ module.exports = async function(deployer, network, accounts) {
     store.transfer(secondPlayer, 21, {from: owner})
   ]);
 
-
   const addr = await store.address;
   const ownerContract = await store.owner.call();
   console.log('AlienInvasion Smart Contract Address: '+addr);
@@ -54,4 +52,4 @@ module.exports = async function(deployer, network, accounts) {
   const addr = await factory.assetTypesRegistry.call();
 
   console.log('addr: '+addr);*/
-};
+}

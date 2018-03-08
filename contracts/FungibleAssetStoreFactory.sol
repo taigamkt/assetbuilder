@@ -5,7 +5,7 @@ import './FungibleAssetStore.sol';
 
 contract FungibleAssetStoreFactory {
 
-  mapping (address => address[]) private storesByOwners ;
+  mapping(address => address[]) private storesByOwners;
 
   event Debug(string _str);
 
@@ -32,7 +32,7 @@ contract FungibleAssetStoreFactory {
     return storesByOwners[msg.sender][_index];
   }
 
-  function getStores() public returns(address[]) {
+  function getStores() public returns (address[]) {
     return storesByOwners[msg.sender];
   }
 }

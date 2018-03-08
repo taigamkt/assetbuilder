@@ -5,7 +5,6 @@ import 'zeppelin-solidity/contracts/token/ERC721/ERC721Token.sol';
 
 contract FungibleAssetStore is ERC721Token, Ownable {
 
-
   event AssetTypeCreated(uint assetTypeId, string title, uint fromTokenId, uint toTokenId);
   /*
   title
@@ -23,7 +22,7 @@ contract FungibleAssetStore is ERC721Token, Ownable {
   string public name;
   string public url;
 
-  struct FungibleAssetType  {
+  struct FungibleAssetType {
     string title;
     string description;
     string imageUrl; //potentially can be a bytes 32
@@ -36,14 +35,15 @@ contract FungibleAssetStore is ERC721Token, Ownable {
     uint fromTokenId;
     uint toTokenId;
   }
+
   // array registering all asset types managed by this store
   FungibleAssetType[] public assetTypes;
 
   //
-  mapping (uint => FungibleAssetTypeTokensIds) assetTypesTokenIds;
+  mapping(uint => FungibleAssetTypeTokensIds) assetTypesTokenIds;
 
   //mapping between the tokenId and assetTypeId
-  mapping (uint => uint) tokenIdAssetTypeId;
+  mapping(uint => uint) tokenIdAssetTypeId;
 
   /*function SimpleAssetType(bytes32 _name, uint _totalSupply, bytes32 _description) public AssetType("SimpleAssetType")  {
     name = _name;
@@ -56,29 +56,29 @@ contract FungibleAssetStore is ERC721Token, Ownable {
     url = _url;
   }
 
-  function createAssetType(string _title, string _description, string _imageUrl, string _assetType, uint _supply, string _properties) public onlyOwner{
+  function createAssetType(string _title, string _description, string _imageUrl, string _assetType, uint _supply, string _properties) public onlyOwner {
     FungibleAssetType memory asset = FungibleAssetType({
-        title: _title,
-        description: _description,
-        imageUrl: _imageUrl,
-        assetType: _assetType,
-        supply: _supply,
-        properties: _properties
-    });
+      title : _title,
+      description : _description,
+      imageUrl : _imageUrl,
+      assetType : _assetType,
+      supply : _supply,
+      properties : _properties
+      });
     uint assetTypeId = assetTypes.push(asset);
 
 
     uint startTokenId = totalSupply();
     uint lastTokenId = startTokenId + _supply - 1;
-    for(uint tokenId = startTokenId; tokenId <= lastTokenId; tokenId++) {
+    for (uint tokenId = startTokenId; tokenId <= lastTokenId; tokenId++) {
       _mint(msg.sender, tokenId);
       tokenIdAssetTypeId[tokenId] = assetTypeId;
     }
 
     FungibleAssetTypeTokensIds memory tokensIds = FungibleAssetTypeTokensIds({
-      fromTokenId: startTokenId,
-      toTokenId: lastTokenId
-    });
+      fromTokenId : startTokenId,
+      toTokenId : lastTokenId
+      });
     assetTypesTokenIds[assetTypeId] = tokensIds;
 
     AssetTypeCreated(assetTypeId, _title, startTokenId, lastTokenId);
@@ -86,7 +86,7 @@ contract FungibleAssetStore is ERC721Token, Ownable {
 
   function getAssetType(uint _assetTypeId) public view returns (string title, string description, string imageUrl, string assetType, uint supply, string properties) {
     require(_assetTypeId <= assetTypes.length);
-    FungibleAssetType storage asset = assetTypes[_assetTypeId-1];
+    FungibleAssetType storage asset = assetTypes[_assetTypeId - 1];
     return (asset.title, asset.description, asset.imageUrl, asset.assetType, asset.supply, asset.properties);
   }
 
@@ -100,8 +100,7 @@ contract FungibleAssetStore is ERC721Token, Ownable {
     require(_index < tokenIds.length);
     uint _tokenId = tokenIds[_index];
     uint assetTypeId = tokenIdAssetTypeId[_tokenId];
-    FungibleAssetType storage asset = assetTypes[assetTypeId-1];
+    FungibleAssetType storage asset = assetTypes[assetTypeId - 1];
     return (_tokenId, asset.title, asset.description, asset.imageUrl, asset.assetType, asset.supply, asset.properties);
-
   }
 }

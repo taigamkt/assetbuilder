@@ -2,10 +2,7 @@ var Migrations = artifacts.require("./Migrations.sol");
 
 var FungibleAssetStore = artifacts.require("./FungibleAssetStore.sol");
 
-
 module.exports = async function(deployer) {
-
-
 
   await Promise.all([
     deployer.deploy(Migrations),
@@ -18,8 +15,6 @@ module.exports = async function(deployer) {
 
 //  let store = instances[0];
 
-
-
   /*results = await Promise.all([
     factory.setAssetTypesRegistry(registry.address)
   ]);
@@ -27,4 +22,4 @@ module.exports = async function(deployer) {
   const addr = await factory.assetTypesRegistry.call();
 
   console.log('addr: '+addr);*/
-};
+}

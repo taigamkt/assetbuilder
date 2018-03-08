@@ -1,38 +1,34 @@
 <div class="main-wrapper container">
   <h1>Asset Creator</h1>
-
   <section class="row">
     <div class="instructions col-md-7">
       <div class="row">
-        <div class="icon-pullout col-md-2"><img src="assets/taiga-black.png" /></div>
+        <div class="icon-pullout col-md-2"><img src="assets/taiga-black.png"/></div>
         <div class="instructions-copy col-md-10">
           You are contributing to a decentralized marketplace. Use this power wisely.
         </div>
       </div>
     </div>
   </section>
-
   <hr/>
-
   <section class="store">
     <!-- Asset -->
     <form>
       <div class="store-wrapper row">
         <h5 class="col-md-7">Store</h5>
-        <label for="store-name" class=" col-md-7">Create a new store for your new asset or choose an existing one.</label>
-
+        <label for="store-name" class=" col-md-7">Create a new store for your new asset or choose an existing
+          one.</label>
         <br/>
-
         <div class="form-group col-md-12">
           <div class="row">
             <div class="input-wrapper form-group col-md-7">
-              <input class="form-control" type="text" id="store-address" name="store-address" placeholder="Store Address" (change)="setStore($event)" value="{{model.selectedStore}}">
+              <input class="form-control" type="text" id="store-address" name="store-address"
+                     placeholder="Store Address" (change)="setStore($event)" value="{{model.selectedStore}}">
             </div>
             <div class="col-md-5">
               <button class="btn btn-primary" (click)="needStore = !needStore">Create New Store</button>
             </div>
           </div>
-
           <!--<div class="row">
             <div class="col-md-7">
               <select class="form-control" id="store-name" name="store-name"  (change)="setStore($event)">
@@ -42,8 +38,7 @@
             <div class="col-md-5">
               <button class="btn btn-primary" (click)="needStore = !needStore">Create New Store</button>
             </div>
-          </div>
--->
+          </div>-->
           <!-- HiddenForm -->
           <div class="add-store-form form-group" *ngIf="needStore">
             <label for="store-name">Store Name</label>
@@ -53,14 +48,10 @@
           </div>
         </div>
       </div>
-
       <hr/>
-
       <div class="asset-wrapper row">
         <h5 class="col-md-7">Asset</h5>
-
         <p class="col-md-7">Define the characteristics of your asset</p>
-
         <!-- Asset Type -->
         <div class="input-wrapper form-group col-md-7">
           <label for="asset-description">Asset Type</label>
@@ -76,38 +67,39 @@
         <!-- Title -->
         <div class="input-wrapper form-group col-md-7">
           <label for="asset-title">Title</label>
-          <input class="form-control" type="text" id="asset-title" name="asset-title" placeholder="My Crypto Asset" (change)="setTitle($event)">
+          <input class="form-control" type="text" id="asset-title" name="asset-title" placeholder="My Crypto Asset"
+                 (change)="setTitle($event)">
         </div>
-
         <!-- Description -->
         <div class="input-wrapper form-group col-md-7">
           <label for="asset-description">Description <span>(Maximum of 200 characters)</span></label>
-          <textarea class="form-control" id="asset-description" name="asset-supply" (change)="setDescription($event)"></textarea>
+          <textarea class="form-control" id="asset-description" name="asset-supply"
+                    (change)="setDescription($event)"></textarea>
         </div>
         <!-- Image URL -->
         <div class="input-wrapper form-group col-md-7 image-bg">
           <label for="asset-image">Enter the URL to your asset image.</label>
-          <input class="form-control" type="text" id="asset-image" name="asset-image"  (change)="setImageUrl($event)">
-
+          <input class="form-control" type="text" id="asset-image" name="asset-image" (change)="setImageUrl($event)">
           <div class="upload-image-wrapper">
-            <img src="assets/upload.png" />
+            <img src="assets/upload.png"/>
             <p>TAIGA does not store your assets. We recommend using ipfs.io for hosting your content.</p>
             <small>(No larger than 286 x 386 pixels.)</small>
           </div>
         </div>
-
         <!-- Supply and Price -->
         <div class="input-wrapper form-group col-md-7">
           <div class="row">
             <div class="col-md-6">
               <label for="asset-supply">Supply</label>
-              <input class="form-control" type="text" id="asset-supply" name="asset-supply" placeholder="10000" (change)="setSupply($event)">
+              <input class="form-control" type="text" id="asset-supply" name="asset-supply" placeholder="10000"
+                     (change)="setSupply($event)">
             </div>
             <div class="col-md-6">
               <label for="asset-supply">Price</label>
               <div class="row">
                 <span class="currency-wrapper col-md-2"><img src="assets/ethereum.png" class="currency"/></span>
-                <input class="form-control col-md-10" type="text" id="asset-price" name="asset-price" placeholder="10000" (change)="setPrice($event)">
+                <input class="form-control col-md-10" type="text" id="asset-price" name="asset-price"
+                       placeholder="10000" (change)="setPrice($event)">
               </div>
             </div>
           </div>
@@ -115,45 +107,40 @@
         <!-- Properties -->
         <div class="input-wrapper form-group col-md-7">
           <label for="asset-description">Properties</label>
-          <textarea class="form-control" id="asset-properties" name="asset-properties" (change)="setProperties($event)"></textarea>
+          <textarea class="form-control" id="asset-properties" name="asset-properties"
+                    (change)="setProperties($event)"></textarea>
         </div>
-
-
         <div class="button-wrapper col-md-7">
           <button type="submit" class="btn btn-primary" (click)="createAsset()">Create New Asset</button>
         </div>
       </div>
-
       <hr/>
-
       <!-- Transfer Token -->
-
       <div class="asset-wrapper row">
         <h5 class="col-md-7">Transfer Token</h5>
-
         <p class="col-md-7">Transfer token to another address</p>
-
         <!-- SmartContract -->
         <div class="input-wrapper form-group col-md-7">
           <label for="transfer-smartcontract">Smart Contract Address</label>
-          <input class="form-control" type="text" id="transfer-smartcontract" name="transfer-smartcontract" placeholder="" (change)="setTransferSmartContract($event)">
+          <input class="form-control" type="text" id="transfer-smartcontract" name="transfer-smartcontract"
+                 placeholder="" (change)="setTransferSmartContract($event)">
         </div>
         <!-- TokenId -->
         <div class="input-wrapper form-group col-md-7">
           <label for="transfer-tokenid">Token Id</label>
-          <input class="form-control" type="text" id="transfer-tokenid" name="transfer-tokenid" placeholder="" (change)="setTransferTokenId($event)">
+          <input class="form-control" type="text" id="transfer-tokenid" name="transfer-tokenid" placeholder=""
+                 (change)="setTransferTokenId($event)">
         </div>
         <!-- To -->
         <div class="input-wrapper form-group col-md-7">
           <label for="transfer-to">To</label>
-          <input class="form-control" type="text" id="transfer-to" name="transfer-to" placeholder="" (change)="setTransferTo($event)">
+          <input class="form-control" type="text" id="transfer-to" name="transfer-to" placeholder=""
+                 (change)="setTransferTo($event)">
         </div>
-
         <div class="button-wrapper col-md-7">
           <button type="submit" class="btn btn-primary" (click)="transferToken()">Transfer Token</button>
         </div>
       </div>
     </form>
-
   </section>
 </div>

@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
-import { CreatorFormComponent } from './asset-builder/creator-form/creator-form.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {RouterModule, Routes} from '@angular/router';
+import {CreatorFormComponent} from './asset-builder/creator-form/creator-form.component';
 
 const routes: Routes = [
-  { path: 'create', component: CreatorFormComponent },
-  { path: '', redirectTo: '/create', pathMatch: 'full' }
+  {path: 'create', component: CreatorFormComponent},
+  {path: '', redirectTo: '/create', pathMatch: 'full'}
 ];
 
 @NgModule({
@@ -13,6 +13,7 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forRoot(routes)
   ],
-  exports: [ RouterModule ]
+  exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

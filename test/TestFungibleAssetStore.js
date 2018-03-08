@@ -4,7 +4,7 @@ contract("AssetType", async function(accounts) {
 
   let toAscii = function(str) {
     return web3.toAscii(str).replace(/\u0000/g, '');
-  }
+  };
 
   let getEvent = function(logs, eventName) {
     let size = logs.length;
@@ -13,7 +13,7 @@ contract("AssetType", async function(accounts) {
         return logs[i];
       }
     }
-  }
+  };
 
   let countEvents = function(logs, eventName) {
     let size = logs.length;
@@ -24,11 +24,11 @@ contract("AssetType", async function(accounts) {
       }
     }
     return count;
-  }
+  };
 
   let isEVMException = function(err) {
     return err.toString().includes('revert');
-  }
+  };
 
   describe('FungibleAssetStore - Creation', () => {
     let contract;
@@ -46,7 +46,6 @@ contract("AssetType", async function(accounts) {
       assert.equal(storeName, nameStored, "Store name is not correct");
       assert.equal(storeUrl, urlStored, "Store url is not correct");
     });
-
   });
 
   describe('FungibleAssetStore - New Asset Type', () => {

@@ -12,21 +12,22 @@ contract CategorizedERC721Token is ERC721Token, Ownable {
   uint[] categoriesSupply;
 
   // mapping between the tokenId and categoryId
-  mapping (uint => uint) private tokenIdCategoryId;
+  mapping(uint => uint) private tokenIdCategoryId;
 
   // method used to create a new category and mint the tokens
-  function createCategory(uint _supply) public onlyOwner{
+  function createCategory(uint _supply) public onlyOwner {
     uint categoryId = categoriesSupply.push(_supply);
 
     uint startTokenId = totalSupply();
     uint lastTokenId = startTokenId + _supply - 1;
-    for(uint tokenId = startTokenId; tokenId <= lastTokenId; tokenId++) {
+    for (uint tokenId = startTokenId; tokenId <= lastTokenId; tokenId++) {
       _mint(msg.sender, tokenId);
       tokenIdCategoryId[tokenId] = categoryId;
     }
 
     CategoryCreated(categoryId, startTokenId, lastTokenId);
   }
+
   // method to extend the amount of tokens for a given category
   function increaseCategorySupply(uint _categoryId, uint _extraSupply) public {
     require(categoriesSupply[_categoryId] > 0);
@@ -38,7 +39,7 @@ contract CategorizedERC721Token is ERC721Token, Ownable {
 
     uint startTokenId = totalSupply();
     uint lastTokenId = startTokenId + _extraSupply - 1;
-    for(uint tokenId = startTokenId; tokenId <= lastTokenId; tokenId++) {
+    for (uint tokenId = startTokenId; tokenId <= lastTokenId; tokenId++) {
       _mint(msg.sender, tokenId);
       tokenIdCategoryId[tokenId] = _categoryId;
     }
