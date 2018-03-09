@@ -38,8 +38,8 @@
     "popper.js": "^1.12.9",
     "rxjs": "^5.5.5",
     "solc": "^0.4.19",
-    "web3": "^1.0.0-beta.30",
-    "zone.js": "github:ethereum/web3.js"
+    "web3": "github:ethereum/web3.js",
+    "zone.js": "^0.8.18"
   },
   "devDependencies": {
     "@angular/cli": "^1.6.1",
